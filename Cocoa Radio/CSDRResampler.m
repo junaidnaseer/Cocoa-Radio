@@ -25,7 +25,7 @@
 // This method is a convenience wrapper for the resampleFrom method
 - (NSData *)resample:(NSData *)input
 {
-    int inputSize  = [input  length] / sizeof(float);
+    int inputSize  = (int)[input  length] / sizeof(float);
     
     int outputSize = (inputSize * self.interpolator) / self.decimator;
     
@@ -50,8 +50,8 @@
 {
     const float *inputFloats = [input bytes];
     float *outputFloats = [output mutableBytes];
-    int inputSize  = [input  length] / sizeof(float);
-    int outputSize = [output length] / sizeof(float);
+    int inputSize  = (int)[input  length] / sizeof(float);
+    int outputSize = (int)[output length] / sizeof(float);
     
     // Make sure that the output array is the correct size.
     if (outputSize != ((inputSize * self.interpolator) / self.decimator)) {

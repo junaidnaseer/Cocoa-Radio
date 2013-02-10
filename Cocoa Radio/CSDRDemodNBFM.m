@@ -40,7 +40,7 @@
 - (NSData *)demodulateData:(NSDictionary *)complexInput
 {
     // Make sure that the temporary arrays are big enough
-    int samples = [complexInput[@"real"] length] / sizeof(float);
+    int samples = (int)[complexInput[@"real"] length] / sizeof(float);
     if ([radioPower length] < (samples * sizeof(float))) {
         [radioPower setLength:samples * sizeof(float)];
     }

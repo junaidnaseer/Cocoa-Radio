@@ -44,7 +44,7 @@
 - (NSData *)demodulateData:(NSDictionary *)complexInput
 {
     // Make sure that the temporary arrays are big enough
-    int samples = [complexInput[@"real"] length] / sizeof(float);
+    int samples = (int)[complexInput[@"real"] length] / sizeof(float);
     if ([radioPower length] < (samples * sizeof(float))) {
         [radioPower setLength:samples * sizeof(float)];
     }
@@ -74,7 +74,7 @@
     // for now, just use a manual squelch threshold
     
     const float *powerSamples = [radioPower bytes];
-    float *audioSamples = [audioFiltered mutableBytes];
+//    float *audioSamples = [audioFiltered mutableBytes];
     double newAverage = 0;
     
     for (int i = 0; i < samples; i++) {

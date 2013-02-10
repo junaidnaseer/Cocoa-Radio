@@ -104,7 +104,7 @@
         }
         
         // Derive the block size from the input (2, 1-byte samples per frame)
-        int blocksize = [inputData length] / 2;
+        int blocksize = (int)[inputData length] / 2;
         
         // We need them to be floats (Real [Inphase] and Imaqinary [Quadrature])
         NSMutableData *realData = [[NSMutableData alloc] initWithLength:sizeof(float) * blocksize];
@@ -281,7 +281,10 @@
     // The following warning can be ignored.  There is a retain cycle
     // but the objects in question live for the duration of the app.
     block = ^(NSData *resultData, float duration) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-retain-cycles"
         CSDRAppDelegate *delegate = self;
+#pragma clang diagnostic pop
         [delegate processRFBlock:resultData withDuration:duration];};
     [device resetEndpoints];
     [device readAsynchLength:blocksize * 2
