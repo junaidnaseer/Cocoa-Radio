@@ -235,8 +235,8 @@
         imagBuffer = tempData;
     }
     
-    int count    = [realIn length]   / sizeof(float);
-    int numTaps  = [taps   length]   / sizeof(float);
+    int count    = (int)[realIn length]   / sizeof(float);
+    int numTaps  = (int)[taps   length]   / sizeof(float);
     int capacity = (count + numTaps) * sizeof(float);
     
     NSMutableData *realData = [[NSMutableData alloc] initWithLength:sizeof(float) * count];
@@ -290,7 +290,7 @@
 {
     NSMutableString *outputString = [[NSMutableString alloc] init];
     
-    int num_taps = [taps length] / sizeof(float);
+    int num_taps = (int)[taps length] / sizeof(float);
     const float *tapsData = [taps bytes];
     for (int i = 0; i < num_taps; i++) {
         [outputString appendFormat:@"%f, ", tapsData[i]];
@@ -360,8 +360,8 @@
         buffer = tempData;
     }
     
-    int count    = [inputData length] / sizeof(float);
-    int numTaps  = [taps      length] / sizeof(float);
+    int count    = (int)[inputData length] / sizeof(float);
+    int numTaps  = (int)[taps      length] / sizeof(float);
     int capacity = (count + numTaps)  * sizeof(float);
     
     NSMutableData *outputData = [[NSMutableData alloc] initWithLength:sizeof(float) * count];
@@ -403,7 +403,7 @@
 {
     NSMutableString *outputString = [[NSMutableString alloc] init];
     
-    int num_taps = [taps length] / sizeof(float);
+    int num_taps = (int)[taps length] / sizeof(float);
     const float *tapsData = [taps bytes];
     for (int i = 0; i < num_taps; i++) {
         [outputString appendFormat:@"%f, ", tapsData[i]];

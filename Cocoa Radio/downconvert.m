@@ -106,7 +106,7 @@ freqXlate(NSDictionary *inputDict, float localOscillator, int sampleRate)
         NSLog(@"Size of real and imaginary data arrays don't match.");
     }
     
-    int count = [realIn length] / sizeof(float);
+    int count = (int)[realIn length] / sizeof(float);
 
     DSPSplitComplex input;
     input.realp = (float *)[inputDict[@"real"] bytes];
@@ -207,7 +207,7 @@ quadratureDemod(NSDictionary *inputDict, float gain, float offset)
         NSLog(@"Size of real and imaginary data arrays don't match.");
     }
     
-    int count = [realIn length] / sizeof(float);
+    int count = (int)[realIn length] / sizeof(float);
     
     DSPSplitComplex input;
     input.realp = (float *)[realIn bytes];
@@ -346,7 +346,7 @@ quadratureDemod(NSDictionary *inputDict, float gain, float offset)
 
 void removeDC(NSMutableData *data, double *average, double alpha)
 {
-    int length = [data length] / sizeof(float);
+    int length = (int)[data length] / sizeof(float);
     float *realSamples = [data mutableBytes];
 
     // Bootstrap DC offset correction and handle bad floats
@@ -368,7 +368,7 @@ void getPower(NSDictionary *input, NSMutableData *output, float context[4], doub
     NSData *realData = input[@"real"];
     NSData *imagData = input[@"imag"];
     
-    int length = [realData length] / sizeof(float);
+    int length = (int)[realData length] / sizeof(float);
     const float *realSamples = [realData bytes];
     const float *imagSamples = [imagData bytes];
 

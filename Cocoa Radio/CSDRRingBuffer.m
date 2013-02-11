@@ -33,13 +33,13 @@
 
 - (int)fillLevel
 {
-    int capacityFrames = [data length] / sizeof(float);
+    int capacityFrames = (int)[data length] / sizeof(float);
     return (head - tail + capacityFrames) % capacityFrames;
 }
 
 - (int)capacity
 {
-    return [data length] / sizeof(float);
+    return (int)[data length] / sizeof(float);
 }
 
 - (void)clear
@@ -52,8 +52,8 @@
     [lock lock];
 
     // Determine whether we'll overflow the buffer.
-    int capacityFrames = [data length] / sizeof(float);
-    int newDataFrames  = [newData length] / sizeof(float);
+    int capacityFrames = (int)[data length] / sizeof(float);
+    int newDataFrames  = (int)[newData length] / sizeof(float);
 
     int usedBuffer = head - tail;
     if (usedBuffer < 0) usedBuffer += capacityFrames;
@@ -130,7 +130,7 @@
 
     // If we're dealing with a buffer underrun zero-out all the missing
     // data and make it fit within the buffer.
-    int capacityFrames = [data length] / sizeof(float);
+    int capacityFrames = (int)[data length] / sizeof(float);
     int filledFrames = (head - tail + capacityFrames) % capacityFrames;
     float *outFloats = ioData->mBuffers[0].mData;
     float *bufferFloats = [data mutableBytes];
@@ -193,13 +193,13 @@
 - (void)fillData:(NSMutableData *)inputData
 {
     // Basic sanity checking
-    int nFrames = [inputData length] / sizeof(float);
+    int nFrames = (int)[inputData length] / sizeof(float);
     
     [lock lock];
     
     // If we're dealing with a buffer underrun zero-out all the missing
     // data and make it fit within the buffer.
-    int capacityFrames = [data length] / sizeof(float);
+    int capacityFrames = (int)[data length] / sizeof(float);
     int filledFrames = (head - tail + capacityFrames) % capacityFrames;
     float *outFloats = [inputData mutableBytes];
     float *bufferFloats = [data mutableBytes];

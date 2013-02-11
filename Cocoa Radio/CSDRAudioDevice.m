@@ -98,7 +98,11 @@ NSMutableArray *devices;
         
         [deviceDict setValue:deviceUID
                       forKey:audioSourceDeviceUIDKey];
-        
+
+        //TODO: change these calls to non-deprecated functions
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         // Get the nominal sample rate
         Float64 currentSampleRate = 0;
         propertySize = sizeof(currentSampleRate);
@@ -119,7 +123,9 @@ NSMutableArray *devices;
         AudioDeviceGetProperty(deviceIDs[i], 0, NO,
                                kAudioDevicePropertyAvailableNominalSampleRates,
                                &propertySize, sampleRates);
-        
+
+#pragma clang diagnostic pop
+
         NSUInteger numSampleRates = propertySize / sizeof(AudioValueRange);
         NSMutableArray *sampleRateTempArray = [[NSMutableArray alloc] init];
         for (int j = 0; j < numSampleRates; j++) {
@@ -347,13 +353,19 @@ OSStatus OutputProc(void *inRefCon,
         UInt32 size;
         OSStatus err =noErr;
         size = sizeof(AudioDeviceID);
-        
+
+        //TODO: change these calls to non-deprecated functions
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         // Select the default device
         AudioDeviceID outputDevice;
         err = AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice,
                                        &size,
                                        &outputDevice);
-        
+
+#pragma clang diagnostic pop
+
         if (err) return nil;
         
         err = AudioUnitSetProperty(auHAL,
