@@ -21,9 +21,6 @@
         IFFilter.skirtWidth = 20000;
         IFFilter.gain = 1.;
         
-        // Stereo WBFM Radio has a pilot tone at 19KHz.  It's better to
-        // filter this signal out.  Therefore, we'll set the maximum af
-        // frequency to 18 KHz + a 1KHz skirt width.
         AFFilter.bandwidth  = 18000;
         AFFilter.skirtWidth = 10000;
         AFFilter.gain = .5;
@@ -74,25 +71,16 @@
     // for now, just use a manual squelch threshold
     
     const float *powerSamples = [radioPower bytes];
-//    float *audioSamples = [audioFiltered mutableBytes];
     double newAverage = 0;
     
     for (int i = 0; i < samples; i++) {
         double powerSample = powerSamples[i];
         newAverage += powerSample / (double)samples;
-
-//        bool mute = (powerSample > self.squelch)? NO : YES;
-//        float audioSample = audioSamples[i];
-//        audioSamples[i] = (mute)? 0. : (audioSample - 1.);
-//        audioSamples[i] = audioSamples[i] / 30.;
     }
 
     // Copy average power into the rfPower variable
     COCOARADIO_DEMODAVERAGE((int)(rfPower * 1000));
     rfPower = newAverage * 10;
-    
-//    float duration = [complexInput[@"real"] length] / self.rfSampleRate;
-//    return [[NSMutableData alloc] initWithLength:(self.afSampleRate * duration)];
     
     // Rational resampling
     NSData *audio;
@@ -112,9 +100,6 @@
     return   15000;
 }
 
-// Stereo WBFM Radio has a pilot tone at 19KHz.  It's better to
-// filter this signal out.  Therefore, we'll set the maximum af
-// frequency to 18 KHz + a 1KHz skirt width.
 - (float)afMaxBandwidth
 {
     return 18000;
